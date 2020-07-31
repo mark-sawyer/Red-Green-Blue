@@ -5,9 +5,7 @@ using UnityEngine;
 public class RGB : MonoBehaviour {
     public SpriteRenderer sprite;
     public static bool round1;
-    public bool red;
-    public bool green;
-    public bool blue;
+    public selectedColour pixelColour;
     public bool redUpdate;
     public bool greenUpdate;
     public bool blueUpdate;
@@ -43,15 +41,18 @@ public class RGB : MonoBehaviour {
     }
 
     public void setNeighboursUpdate() {
-        if(red) {
-            redUpdate = true;
+        switch (pixelColour) {
+            case selectedColour.RED:
+                redUpdate = true;
+                break;
+            case selectedColour.GREEN:
+                greenUpdate = true;
+                break;
+            case selectedColour.BLUE:
+                blueUpdate = true;
+                break;
         }
-        else if (green) {
-            greenUpdate = true;
-        }
-        else if (blue) {
-            blueUpdate = true;
-        }
+
         setUpdate(north);
         setUpdate(east);
         setUpdate(south);
@@ -60,66 +61,56 @@ public class RGB : MonoBehaviour {
 
     public void setUpdate(GameObject neighbour) {
         if (neighbour != null) {
-            if (red) {
-                neighbour.GetComponent<RGB>().redUpdate = true;
-            }
-            else if (green) {
-                neighbour.GetComponent<RGB>().greenUpdate = true;
-            }
-            else if (blue) {
-                neighbour.GetComponent<RGB>().blueUpdate = true;
+            switch (pixelColour) {
+                case selectedColour.RED:
+                    neighbour.GetComponent<RGB>().redUpdate = true;
+                    break;
+                case selectedColour.GREEN:
+                    neighbour.GetComponent<RGB>().greenUpdate = true;
+                    break;
+                case selectedColour.BLUE:
+                    neighbour.GetComponent<RGB>().blueUpdate = true;
+                    break;
             }
         }
     }
 
     public void resolveColours() {
         if (redUpdate & greenUpdate & blueUpdate) {
-            red = false;
-            green = false;
-            blue = false;
+            pixelColour = selectedColour.WHITE;
         }
         else if (redUpdate & greenUpdate) {
-            red = true;
-            green = false;
-            blue = false;
+            pixelColour = selectedColour.RED;
         }
         else if (greenUpdate & blueUpdate) {
-            red = false;
-            green = true;
-            blue = false;
+            pixelColour = selectedColour.GREEN;
         }
         else if (blueUpdate & redUpdate) {
-            red = false;
-            green = false;
-            blue = true;
+            pixelColour = selectedColour.BLUE;
         }
         else if (redUpdate) {
-            red = true;
-            green = false;
-            blue = false;
+            pixelColour = selectedColour.RED;
         }
         else if (greenUpdate) {
-            red = false;
-            green = true;
-            blue = false;
+            pixelColour = selectedColour.GREEN;
         }
         else if (blueUpdate) {
-            red = false;
-            green = false;
-            blue = true;
+            pixelColour = selectedColour.BLUE;
         }
 
-        if (red) {
-            sprite.color = Color.red;
-        }
-        else if (green) {
-            sprite.color = Color.green;
-        }
-        else if (blue) {
-            sprite.color = Color.blue;
-        }
-        else {
-            sprite.color = Color.white;
+        switch (pixelColour) {
+            case selectedColour.RED:
+                sprite.color = Color.red;
+                break;
+            case selectedColour.GREEN:
+                sprite.color = Color.green;
+                break;
+            case selectedColour.BLUE:
+                sprite.color = Color.blue;
+                break;
+            default:
+                sprite.color = Color.white;
+                break;
         }
 
         redUpdate = false;
@@ -130,27 +121,19 @@ public class RGB : MonoBehaviour {
     public void manuallyChangeColour() {
         switch (Controller.colour) {
             case selectedColour.RED:
-                red = true;
-                green = false;
-                blue = false;
+                pixelColour = selectedColour.RED;
                 sprite.color = Color.red;
                 break;
             case selectedColour.GREEN:
-                red = false;
-                green = true;
-                blue = false;
+                pixelColour = selectedColour.GREEN;
                 sprite.color = Color.green;
                 break;
             case selectedColour.BLUE:
-                red = false;
-                green = false;
-                blue = true;
+                pixelColour = selectedColour.BLUE;
                 sprite.color = Color.blue;
                 break;
             case selectedColour.WHITE:
-                red = false;
-                green = false;
-                blue = false;
+                pixelColour = selectedColour.WHITE;
                 sprite.color = Color.white;
                 break;
         }
@@ -161,9 +144,7 @@ public class RGB : MonoBehaviour {
     }
 
     public void resetColour() {
-        red = false;
-        green = false;
-        blue = false;
+        pixelColour = selectedColour.WHITE;
         redUpdate = false;
         greenUpdate = false;
         blueUpdate = false;

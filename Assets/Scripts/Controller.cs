@@ -16,7 +16,7 @@ public class Controller : MonoBehaviour {
     private int MAX_TIMER_RESET = 20;
     private float timerReset;
     private float timer;
-    private float clickRadius;
+    private float clickRadius = 5f;
     private int MAX_RADIUS = 20;
     private int MIN_RADIUS = 1;
     private bool isRadiusMode;
@@ -27,7 +27,6 @@ public class Controller : MonoBehaviour {
         isRadiusMode = true;
         timerReset = MIN_TIMER_RESET;
         timer = MIN_TIMER_RESET / 20;
-        clickRadius = 5f;
         radiusText.GetComponent<Text>().text = "radius: " + clickRadius;
         timerText.GetComponent<Text>().text = "update: 0.05s";
         radiusText.GetComponent<Text>().color = Color.red;
@@ -165,8 +164,8 @@ public class Controller : MonoBehaviour {
 }
 
 public enum selectedColour {
+    WHITE,
     RED,
     GREEN,
-    BLUE,
-    WHITE
+    BLUE
 };
