@@ -13,13 +13,14 @@ public class Controller : MonoBehaviour {
     public GameObject radiusText;
     public GameObject timerText;
     private int MIN_TIMER_RESET = 1;
-    private int MAX_TIMER_RESET = 100;
+    private int MAX_TIMER_RESET = 20;
     private float timerReset;
     private float timer;
     private float clickRadius;
     private float MAX_RADIUS = 20f;
     private float MIN_RADIUS = 0.5f;
     private bool isRadiusMode;
+    private bool paused;
     public static selectedColour colour = selectedColour.RED;
 
     void Start() {
@@ -52,7 +53,10 @@ public class Controller : MonoBehaviour {
             Application.Quit();
         }
 
-        timer -= Time.deltaTime;
+        if (!paused) {
+            timer -= Time.deltaTime;
+        }
+
         if (timer <= 0) {
             timer = timerReset / 20;
 
@@ -121,6 +125,10 @@ public class Controller : MonoBehaviour {
                 timerText.GetComponent<Text>().color = Color.black;
                 isRadiusMode = true;
             }
+        }
+
+        if (Input.GetKeyDown("p")) {
+            paused = !paused;
         }
     }
 

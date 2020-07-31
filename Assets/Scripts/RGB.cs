@@ -167,5 +167,6 @@ public class RGB : MonoBehaviour {
         redUpdate = false;
         greenUpdate = false;
         blueUpdate = false;
+        sprite.color = Color.white;
     }
 }
