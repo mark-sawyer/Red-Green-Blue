@@ -17,8 +17,8 @@ public class Controller : MonoBehaviour {
     private float timerReset;
     private float timer;
     private float clickRadius;
-    private float MAX_RADIUS = 20f;
-    private float MIN_RADIUS = 0.5f;
+    private int MAX_RADIUS = 20;
+    private int MIN_RADIUS = 1;
     private bool isRadiusMode;
     private bool paused;
     public static selectedColour colour = selectedColour.RED;
@@ -28,8 +28,8 @@ public class Controller : MonoBehaviour {
         timerReset = MIN_TIMER_RESET;
         timer = MIN_TIMER_RESET / 20;
         clickRadius = 5f;
-        radiusText.GetComponent<Text>().text = string.Format("{0:N1}", clickRadius);
-        timerText.GetComponent<Text>().text = "0.05";
+        radiusText.GetComponent<Text>().text = "radius: " + clickRadius;
+        timerText.GetComponent<Text>().text = "update: 0.05s";
         radiusText.GetComponent<Text>().color = Color.red;
         selectionBox.GetComponent<SpriteRenderer>().color = Color.red;
 
@@ -137,13 +137,13 @@ public class Controller : MonoBehaviour {
             if (dir > 0) {
                 if (clickRadius < MAX_RADIUS) {
                     clickRadius += MIN_RADIUS;
-                    radiusText.GetComponent<Text>().text = string.Format("{0:N1}", clickRadius);
+                    radiusText.GetComponent<Text>().text = "radius: " + clickRadius;
                 }
             }
             else if (dir < 0) {
                 if (clickRadius > MIN_RADIUS) {
                     clickRadius -= MIN_RADIUS;
-                    radiusText.GetComponent<Text>().text = string.Format("{0:N1}", clickRadius);
+                    radiusText.GetComponent<Text>().text = "radius: " + clickRadius;
                 }
             }
         }
@@ -151,13 +151,13 @@ public class Controller : MonoBehaviour {
             if (dir > 0) {
                 if (timerReset < MAX_TIMER_RESET) {
                     timerReset += MIN_TIMER_RESET;
-                    timerText.GetComponent<Text>().text = string.Format("{0:N2}", timerReset / 20);
+                    timerText.GetComponent<Text>().text = "update: " + string.Format("{0:N2}", timerReset / 20) + "s";
                 }
             }
             else if (dir < 0) {
                 if (timerReset > MIN_TIMER_RESET) {
                     timerReset -= MIN_TIMER_RESET;
-                    timerText.GetComponent<Text>().text = string.Format("{0:N2}", timerReset / 20);
+                    timerText.GetComponent<Text>().text = "update: " + string.Format("{0:N2}", timerReset / 20) + "s";
                 }
             }
         }
